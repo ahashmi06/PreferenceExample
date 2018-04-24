@@ -37,7 +37,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.settings,menu);
+        getMenuInflater().inflate(R.menu.settings, menu);
         return true;
     }
 
@@ -139,6 +139,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         // remove the setContentView method call and use loadHeadersFromResource from onBuildHeaders method to fix the error:
         // IllegalArgumentException: No view found for id 0x102036e (android:id/prefs) for fragment NotificationPreferenceFragment{efb92ac #1 id=0x102036e}
         setContentView(R.layout.settings_activity);
+
+        // Same error will occur if we add fragment directly under android.R.id.content as this replaces the entire content set by PreferenceActivity
+        /*getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new SettingsActivity.GeneralPreferenceFragment())
+                .commit();*/
         setupActionBar();
     }
 
@@ -189,6 +194,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
         public static final String TAG = "GeneralPreferenceFragment";
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -221,6 +227,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class NotificationPreferenceFragment extends PreferenceFragment {
         public static final String TAG = "NotificationPreferenceFragment";
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
